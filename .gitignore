@@ -1,0 +1,27 @@
+# File di sistema Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# File temporanei e Log
+*.log
+*.tmp
+*.bak
+.vscode/
+.idea/
+
+# File di backup di Office
+~$*
+
+# Cartelle di dipendenze comuni
+node_modules/
+venv/
+.env
+__pycache__/
+
+# Specifici Moduli CAD (Parametric Printing & Dimensioning)
+*.pdf
+*.plt
+*.dwl
+*.dwl2
+output/
