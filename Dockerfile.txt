@@ -1,0 +1,23 @@
+# Usa un'immagine Python leggera
+FROM python:3.10-slim
+
+# Imposta la directory di lavoro nel container
+WORKDIR /app
+
+# Installa le dipendenze di sistema necessarie per ezdxf e network
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copia i requisiti e installali
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia tutto il resto del progetto
+COPY . .
+
+# Espone la porta 5000 per la comunicazione con Open WebUI o API
+EXPOSE 5000
+
+# Comando per avviare il server dell'Agente
+CMD ["python", "main.py"]

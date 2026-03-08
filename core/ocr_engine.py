@@ -1,15 +1,31 @@
-class SmartOCREngine:
-    def __init__(self, min_confidence=0.85):
-        self.min_confidence = min_confidence
+import os
+from dotenv import load_dotenv
 
-    def get_text(self, image_path):
-        # Simulazione processo OCR
-        # 1. Prima scansione a 300 DPI
-        confidenza_rilevata = 0.70 # Esempio di scansione sporca
+load_dotenv()
+
+class OCREngine:
+    def __init__(self):
+        self.model_vision = os.getenv("MODEL_VISION")
+        self.confidence_threshold = float(os.getenv("OCR_CONFIDENCE_TRIGGER", 0.85))
+
+    def process_image(self, image_path):
+        """Simula l'analisi dell'immagine con Llama 3.2-Vision."""
+        if not os.path.exists(image_path):
+            return None, "File non trovato."
         
-        if confidenza_rilevata < self.min_confidence:
-            print(f"[INFO] Confidenza bassa ({confidenza_rilevata}). Attivazione Double-Scan a 600 DPI...")
-            # Qui il codice raddoppierebbe la risoluzione prima di riprovare
-            return "Risultato Ottimizzato", True
+        print(f"[OCR] Analisi in corso con {self.model_vision} su {image_path}...")
+        
+        # Simulazione dati estratti dall'impianto
+        extracted_data = {
+            "potenza_termica": "24.5 kW",
+            "pressione_esercizio": "1.5 bar",
+            "località": "Lanciano"
+        }
+        confidence = 0.82 # Esempio sotto soglia per attivare Dual-Scan
+        
+        if confidence < self.confidence_threshold:
+            print(f"[!] Confidenza {confidence*100}% < {self.confidence_threshold*100}%: ATTIVAZIONE SCAN 600 DPI.")
+            # Qui avverrebbe la seconda passata ad alta risoluzione
+            confidence = 0.95 
             
-        return "Risultato Standard", False
+        return extracted_data, confidence
